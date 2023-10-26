@@ -31,12 +31,12 @@ local get_lines = vim.api.nvim_buf_get_lines
 
 -- Current test run info
 local spec = {
-  cmd = { "bundle", "exec", "rspec", nil, "--format", "j" },
+  cmd = { "bundle", "exec", "spring", "rspec", nil, "--format", "j" },
 }
 
 function spec:cmd_path(current_path, run_current_example)
   if not run_current_example then return self.path end
-  if current_path ~= self.path then return self.cmd[4] end
+  if current_path ~= self.path then return self.cmd[5] end
 
   return fmt("%s:%s", self.path, self.current_linenr)
 end
@@ -52,7 +52,7 @@ function spec:populate(run_current_example)
   end
 
   self.current_linenr = vim.api.nvim_win_get_cursor(0)[1]
-  self.cmd[4] = self:cmd_path(current_path, run_current_example)
+  self.cmd[5] = self:cmd_path(current_path, run_current_example)
 
   return self.path
 end
